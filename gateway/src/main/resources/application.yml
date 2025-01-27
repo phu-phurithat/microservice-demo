@@ -1,0 +1,25 @@
+server:
+  port: 8888
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id : employee-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/employees/**
+          filters:
+            - StripPrefix=1
+
