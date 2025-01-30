@@ -1,4 +1,4 @@
-package com.phu.organizationservice;
+package com.phu.service;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

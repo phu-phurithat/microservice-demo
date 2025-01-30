@@ -1,4 +1,4 @@
-package com.phu.organizationservice;
+package com.phu.service.employee;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -6,10 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Document
-public class Organization {
+public class Employee {
+
     @Id
     private String id;
     private String name;
-    private String address;
-
+    private int age;
+    private String position;
+    private String organizationId;
+    private String departmentId;
 }
+

@@ -24,4 +24,15 @@ spring:
             - Path=/employees/**
           filters:
             - StripPrefix=0
-
+        - id : department-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/departments/**
+          filters:
+            - StripPrefix=0
+        - id : organization-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/organizations/**
+          filters:
+            - StripPrefix=0

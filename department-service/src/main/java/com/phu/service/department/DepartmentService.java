@@ -1,14 +1,22 @@
 package com.phu.service.department;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.phu.service.employee.Employee;
+import com.phu.service.employee.EmployeeClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentService {
-    @Autowired
-    private DepartmentRepository departmentRepository;
+
+    private final DepartmentRepository departmentRepository;
+    private final EmployeeClient employeeClient;
+
+    public DepartmentService(DepartmentRepository departmentRepository, EmployeeClient employeeClient) {
+        this.departmentRepository = departmentRepository;
+        this.employeeClient = employeeClient;
+    }
 
     public List<Department> findAllDepartment() {
         return departmentRepository.findAll();
@@ -33,6 +41,17 @@ public class DepartmentService {
 
     public List<Department> findDepartmentByOrganizationId(String organizationId) {
         return departmentRepository.findByOrganizationId(organizationId);
+    }
+
+    public Department findDepartmentById(String id) {
+        Optional<Department> department = departmentRepository.findById(id);
+
+        department.ifPresent(d -> {
+            List<Employee> employees = employeeClient.findEmployeeByDepartmentId(d.getId());
+            d.setEmployees(employees);
+        });
+
+        return department.orElse(null);
     }
 
 }

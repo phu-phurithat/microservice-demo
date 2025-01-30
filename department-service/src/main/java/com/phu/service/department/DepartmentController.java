@@ -1,6 +1,5 @@
 package com.phu.service.department;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,18 +7,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/departments")
 public class DepartmentController {
-    @Autowired
-    private DepartmentService departmentService;
+
+    private final DepartmentService departmentService;
+
+    public DepartmentController(DepartmentService departmentService) {
+        this.departmentService = departmentService;
+    }
 
     @GetMapping
     public List<Department> findAllDepartment() {
         return departmentService.findAllDepartment();
     }
 
-//    @GetMapping("/{id}")
-//    public Department findDepartmentById(@PathVariable String id) {
-//        return departmentService.findDepartmentById(id);
-//    }
+    @GetMapping("/{id}")
+    public Department findDepartmentById(@PathVariable String id) {
+        return departmentService.findDepartmentById(id);
+    }
 
     @PostMapping
     public Department addNewDepartment(@RequestBody Department department) {
