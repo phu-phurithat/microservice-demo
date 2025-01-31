@@ -19,7 +19,7 @@ spring:
           lower-case-service-id: true
       routes:
         - id : employee-service
-          uri: http://localhost:8082
+          uri: lb://employee-service
           predicates:
             - Path=/employees/**
           filters:

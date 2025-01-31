@@ -1,13 +1,16 @@
 package com.phu.service.department;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.phu.service.employee.Employee;
 import com.phu.service.employee.EmployeeClient;
+import org.springframework.cloud.netflix.ribbon.RibbonClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RibbonClient("employee-service")
 public class DepartmentService {
 
     private final DepartmentRepository departmentRepository;
@@ -20,10 +23,6 @@ public class DepartmentService {
 
     public List<Department> findAllDepartment() {
         return departmentRepository.findAll();
-    }
-
-    public Department findDepartmentByIdRecovery(String id) {
-        return departmentRepository.findById(id).orElse(null);
     }
 
     public Department addNewDepartment(Department department) {
@@ -43,6 +42,7 @@ public class DepartmentService {
         return departmentRepository.findByOrganizationId(organizationId);
     }
 
+    @HystrixCommand(fallbackMethod = "findDepartmentByIdRecovery")
     public Department findDepartmentById(String id) {
         Optional<Department> department = departmentRepository.findById(id);
 
@@ -54,4 +54,7 @@ public class DepartmentService {
         return department.orElse(null);
     }
 
+    public Department findDepartmentByIdRecovery(String id) {
+        return departmentRepository.findById(id).orElse(null);
+    }
 }

@@ -1,5 +1,6 @@
 package com.phu.service.department;
 
+import io.micrometer.tracing.annotation.NewSpan;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class DepartmentController {
         return departmentService.findAllDepartment();
     }
 
+    @NewSpan
     @GetMapping("/{id}")
     public Department findDepartmentById(@PathVariable String id) {
         return departmentService.findDepartmentById(id);

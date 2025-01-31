@@ -1,0 +1,16 @@
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eurek
+
+spring:
+  application:
+    name: discovery
+
+server:
+  port: 8761

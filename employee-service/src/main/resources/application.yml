@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    config:
+      override-none: true
+      allow-override: true
+      override-system-properties: false
+    compatibility-verifier:
+      enabled: false
+  application:
+    name: employee-service
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    baseUrl: http://localhost:9411
+
+server:
+  port: 8082
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
